@@ -78,6 +78,7 @@ export default function App() {
         onChangeText={setDescription}
       />
       <Picker selectedValue={course} onValueChange={setCourse} style={styles.input}>
+        <Picker.item label="Select Course" value="" />
         <Picker.Item label="Starter" value="Starter" />
         <Picker.Item label="Main" value="Main" />
         <Picker.Item label="Dessert" value="Dessert" />
@@ -95,24 +96,25 @@ export default function App() {
       </TouchableOpacity>
 
       {/* Menu List */}
-      <FlatList
-        data={filteredItems}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Text style={styles.title}>{item.name}</Text>
-            <Text style={styles.meta}>
-              {item.course} • R{item.price}
-            </Text>
-            <Text numberOfLines={2} style={styles.desc}>
-              {item.description}
-            </Text>
-          </View>
-        )}
-      />
+      {filteredItems.length === 0 ? (
+  <Text style={{textAlign: "center", marginTop: 20}}>No dishes added yet</Text>
+) : (
+  <FlatList
+    data={filteredItems}
+    keyExtractor={(item) => item.id}
+    renderItem={({ item }) => (
+      <View style={styles.card}>
+        <Text style={styles.title}>{item.name}</Text>
+        <Text style={styles.meta}>{item.course} • R{item.price}</Text>
+        <Text numberOfLines={2} style={styles.desc}>{item.description}</Text>
+      </View>
+    )}
+  />
+)}
+      /{">"}
 
       {/* Total Items */}
-      <Text style={styles.footer}>Total items: {menuItems.length}</Text>
+      <Text style={[styles.footer, {color: "#0A3"}]}>Total items: {menuItems.length}</Text>
     </SafeAreaView>
   );
 }
