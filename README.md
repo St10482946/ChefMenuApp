@@ -1,11 +1,30 @@
-# Sample Snack app
+# ChefMenuApp 
+**Module:** Mobile App Scripting (MAST5112)  
+**Part 2 – Adding the Logic**  
+**Student:** Emily Qhawekazi Maramani (ST10482946)
+**Lecturer:** Mr Asiphe Magaudini
 
-Open the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!
+## Overview
+ChefMenuApp is a React Native (Expo) mobile application developed for a private chef named Christoffel.  
+It allows the chef to create and view dynamic menus for clients.
 
-When you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).
+## Features Implemented (Part 2)
+- Add new dishes with **Name**, **Description**, **Course**, and **Price**
+- **Predefined courses** (Starter, Main, Dessert, Beverage)
+- **Menu list** displays added dishes instantly
+- **Total item counter** updates automatically
+- **Search** and **Filter chips** for quick browsing
+- Simple, clean, and consistent user interface
 
-All projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.
+## Technologies
+- Snack
+- React Native / Expo  
+- React Hooks (useState, useMemo)  
+- React Native Picker
 
-If you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).
-
-Snack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).
+## How to Run
+1. Clone the repo  
+   git clone https://github.com/st10482946/ChefMenuApp.git
+   cd ChefMenuApp
+   npm install
+   npx expo start
