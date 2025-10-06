@@ -28,3 +28,9 @@ It allows the chef to create and view dynamic menus for clients.
    cd ChefMenuApp
    npm install
    npx expo start
+
+   ## Github Repo Link
+   https://github.com/ST10482946/ChefMenuApp
+
+   ## Video demonstration link**
+   https://www.loom.com/share/773f58af85c849f580b4ec9482884017?sid=59ebde03-549b-48af-b678-e9b859db7a57
