@@ -1,5 +1,13 @@
 import React, { useState, useMemo } from "react";
-import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 export default function App() {
@@ -30,9 +38,12 @@ export default function App() {
 
   // Filter + search
   const filteredItems = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
     return menuItems.filter((dish) => {
       const matchesCourse = filter === "All" || dish.course === filter;
-      const matchesSearch = dish.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch =
+        dish.name.toLowerCase().includes(term) ||
+        dish.description.toLowerCase().includes(term);
       return matchesCourse && matchesSearch;
     });
   }, [menuItems, filter, searchTerm]);
@@ -58,12 +69,14 @@ export default function App() {
             style={[styles.chip, filter === c && styles.chipSelected]}
             onPress={() => setFilter(c)}
           >
-            <Text style={styles.chipText}>{c}</Text>
+            <Text style={[styles.chipText, filter === c && { color: "#fff" }]}>
+              {c}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
 
-      {/* Add Dish Form (Part 2 only on Home) */}
+      {/* Add Dish Form */}
       <Text style={styles.subHeader}>Add New Dish</Text>
       <TextInput
         style={styles.input}
@@ -78,7 +91,6 @@ export default function App() {
         onChangeText={setDescription}
       />
       <Picker selectedValue={course} onValueChange={setCourse} style={styles.input}>
-        <Picker.item label="Select Course" value="" />
         <Picker.Item label="Starter" value="Starter" />
         <Picker.Item label="Main" value="Main" />
         <Picker.Item label="Dessert" value="Dessert" />
@@ -97,24 +109,31 @@ export default function App() {
 
       {/* Menu List */}
       {filteredItems.length === 0 ? (
-  <Text style={{textAlign: "center", marginTop: 20}}>No dishes added yet</Text>
-) : (
-  <FlatList
-    data={filteredItems}
-    keyExtractor={(item) => item.id}
-    renderItem={({ item }) => (
-      <View style={styles.card}>
-        <Text style={styles.title}>{item.name}</Text>
-        <Text style={styles.meta}>{item.course} • R{item.price}</Text>
-        <Text numberOfLines={2} style={styles.desc}>{item.description}</Text>
-      </View>
-    )}
-  />
-)}
-      /{">"}
+        <Text style={{ textAlign: "center", marginTop: 20 }}>
+          {menuItems.length === 0 ? "No dishes added yet" : "No matching dishes found"}
+        </Text>
+      ) : (
+        <FlatList
+          data={filteredItems}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <Text style={styles.title}>{item.name}</Text>
+              <Text style={styles.meta}>
+                {item.course} • R{item.price}
+              </Text>
+              <Text numberOfLines={2} style={styles.desc}>
+                {item.description}
+              </Text>
+            </View>
+          )}
+        />
+      )}
 
       {/* Total Items */}
-      <Text style={[styles.footer, {color: "#0A3"}]}>Total items: {menuItems.length}</Text>
+      <Text style={[styles.footer, { color: "#0A3" }]}>
+        Total items: {menuItems.length}
+      </Text>
     </SafeAreaView>
   );
 }
