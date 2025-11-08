@@ -1,3 +1,4 @@
+// utils/calculations.js
 export function calculateAverages(menuItems) {
   const courses = ["Starter", "Main", "Dessert", "Beverage"];
   const result = { Starter: "—", Main: "—", Dessert: "—", Beverage: "—" };

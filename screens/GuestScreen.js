@@ -1,3 +1,4 @@
+// screens/GuestScreen.js
 import React, { useContext, useState, useMemo } from "react";
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
 import { MenuContext } from "../App";

@@ -1,38 +1,35 @@
+// components/DishCard.js
 import React, { useContext } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { MenuContext } from "../App";
 
 export default function DishCard({ item, showRemove = false }) {
   const { removeDish } = useContext(MenuContext);
 
-  const handleRemove = () => {
-    Alert.alert("Remove", `Remove "${item.name}"?`, [
-      { text: "Cancel", style: "cancel" },
-      { text: "Remove", style: "destructive", onPress: () => removeDish(item.id) }
-    ]);
-  };
-
   return (
     <View style={styles.card}>
-      <View style={{ flex: 1 }}>
-        <Text style={styles.title}>{item.name}</Text>
-        <Text style={styles.meta}>{item.course} • R{item.price}</Text>
-        <Text numberOfLines={2} style={styles.desc}>{item.description}</Text>
+      <View style={styles.row}>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.name}>{item.name}</Text>
+          <Text style={styles.desc}>{item.description}</Text>
+          <Text style={styles.meta}>{item.course} • R{Number(item.price).toFixed(2)}</Text>
+        </View>
+        {showRemove ? (
+          <TouchableOpacity style={styles.remove} onPress={() => removeDish(item.id)}>
+            <Text style={styles.removeText}>Remove</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
-      {showRemove && (
-        <TouchableOpacity style={styles.removeButton} onPress={handleRemove}>
-          <Text style={styles.removeText}>Remove</Text>
-        </TouchableOpacity>
-      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  card: { flexDirection: "row", borderWidth: 1, borderColor: "#ddd", padding: 12, borderRadius: 8, marginBottom: 10, alignItems: "center" },
-  title: { fontSize: 16, fontWeight: "700" },
-  meta: { fontSize: 12, color: "#666", marginTop: 4 },
-  desc: { fontSize: 12, color: "#333", marginTop: 6 },
-  removeButton: { marginLeft: 12, backgroundColor: "#ff4d4f", paddingVertical: 6, paddingHorizontal: 8, borderRadius: 6 },
-  removeText: { color: "#fff", fontWeight: "600" }
+  card: { padding: 12, borderWidth: 1, borderColor: "#eee", borderRadius: 8, marginVertical: 6, backgroundColor: "#fff" },
+  row: { flexDirection: "row", alignItems: "center" },
+  name: { fontSize: 16, fontWeight: "700" },
+  desc: { color: "#444", marginTop: 4 },
+  meta: { marginTop: 6, fontSize: 12, color: "#333" },
+  remove: { backgroundColor: "#f33", padding: 8, borderRadius: 6, marginLeft: 8 },
+  removeText: { color: "#fff", fontWeight: "700" }
 });

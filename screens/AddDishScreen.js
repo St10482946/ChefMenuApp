@@ -1,3 +1,4 @@
+// screens/AddDishScreen.js
 import React, { useState, useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
@@ -15,7 +16,7 @@ export default function AddDishScreen({ navigation }) {
       Alert.alert("Please fill all fields");
       return;
     }
-    const newDish = { name, description, course, price: Number(price) };
+    const newDish = { name: name.trim(), description: description.trim(), course, price: Number(price) };
     addDish(newDish);
 
     // clear fields
@@ -33,12 +34,14 @@ export default function AddDishScreen({ navigation }) {
 
       <TextInput style={styles.input} placeholder="Dish Name" value={name} onChangeText={setName} />
       <TextInput style={styles.input} placeholder="Description" value={description} onChangeText={setDescription} />
-      <Picker selectedValue={course} onValueChange={setCourse} style={styles.picker}>
-        <Picker.Item label="Starter" value="Starter" />
-        <Picker.Item label="Main" value="Main" />
-        <Picker.Item label="Dessert" value="Dessert" />
-        <Picker.Item label="Beverage" value="Beverage" />
-      </Picker>
+      <View style={styles.pickerWrap}>
+        <Picker selectedValue={course} onValueChange={setCourse} style={styles.picker}>
+          <Picker.Item label="Starter" value="Starter" />
+          <Picker.Item label="Main" value="Main" />
+          <Picker.Item label="Dessert" value="Dessert" />
+          <Picker.Item label="Beverage" value="Beverage" />
+        </Picker>
+      </View>
       <TextInput style={styles.input} placeholder="Price (ZAR)" keyboardType="numeric" value={price} onChangeText={setPrice} />
       <TouchableOpacity style={styles.button} onPress={handleAdd}>
         <Text style={styles.buttonText}>Add Dish</Text>
@@ -51,7 +54,8 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: "#fff" },
   header: { fontSize: 20, fontWeight: "700", marginBottom: 12 },
   input: { borderWidth: 1, borderColor: "#ccc", borderRadius: 6, padding: 8, marginBottom: 8 },
-  picker: { borderWidth: 1, borderColor: "#ccc", borderRadius: 6, marginBottom: 8 },
+  pickerWrap: { borderWidth: 1, borderColor: "#ccc", borderRadius: 6, marginBottom: 8, overflow: "hidden" },
+  picker: { height: 44 },
   button: { backgroundColor: "#0A3", padding: 12, borderRadius: 6 },
   buttonText: { color: "#fff", fontWeight: "bold", textAlign: "center" }
 });

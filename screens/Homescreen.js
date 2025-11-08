@@ -1,3 +1,4 @@
+// screens/HomeScreen.js
 import React, { useContext, useMemo, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet, SafeAreaView } from "react-native";
 import { MenuContext } from "../App";
