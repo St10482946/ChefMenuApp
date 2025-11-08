@@ -16,6 +16,17 @@ It allows the chef to create and view dynamic menus for clients.
 - **Search** and **Filter chips** for quick browsing
 - Simple, clean, and consistent user interface
 
+## Upgrades & Features Added (Part 3)
+- **AddDishScreen**: dedicated screen for adding dishes with **input validation**  
+- **GuestScreen**: separate screen for guest users to view and filter dishes  
+- **MenuContext**: centralized state management for menu items across screens  
+- **calculateAverages utility**: computes average price per course and displays on HomeScreen  
+- **Enhanced UI/UX**:  
+  - Course filter chips with selection highlighting  
+  - Navigation buttons for smooth transitions  
+  - Consistent styling and layout improvements  
+- Modular code structure (`components`, `screens`, `utils`) for maintainability  
+
 ## Technologies
 - Snack
 - React Native / Expo  
