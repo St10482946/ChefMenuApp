@@ -1,6 +1,6 @@
 # ChefMenuApp 
 **Module:** Mobile App Scripting (MAST5112)  
-**Part 2 and 3**  
+**Part 2 and 3**       
 **Student:** Emily Qhawekazi Maramani (ST10482946)
 **Lecturer:** Mr Asiphe Magaudini
 
@@ -22,9 +22,9 @@ It allows the chef to create and view dynamic menus for clients.
 - **MenuContext**: centralized state management for menu items across screens  
 - **calculateAverages utility**: computes average price per course and displays on HomeScreen  
 - **Enhanced UI/UX**:  
-  - Course filter chips with selection highlighting  
-  - Navigation buttons for smooth transitions  
-  - Consistent styling and layout improvements  
+- Course filter chips with selection highlighting  
+- Navigation buttons for smooth transitions  
+- Consistent styling and layout improvements  
 - Modular code structure (`components`, `screens`, `utils`) for maintainability  
 
 ## App Structure
@@ -48,20 +48,15 @@ index.js # Entry point
 
 ## Changelog
 *Part 3 Submission*
-- Added MenuContext to manage global state for menu items.
-- Implemented React Navigation with a stack containing Home, AddDish, and Guest screens.
-- Refactored the “add dish” form into a separate AddDishScreen as required.
-- Added GuestScreen to simulate a customer browsing the menu.
-- Implemented course filtering using chip-style UI buttons in both Home and Guest screens.
-- Added DishCard reusable component to display menu items consistently.
-- Added remove item functionality (demonstrated in Guest view).
-- Implemented search functionality with useMemo for performance optimization.
-- Added average price per course calculation via calculateAverages utility.
-- Added total dish count summary to Home screen.
-- Fixed average currency formatting to always display two decimals (Rxx.xx).
-- Added input validation and alert feedback for empty form fields.
-- Improved layout consistency and styling across screens.
-- Updated README with documentation, test instructions, and video demonstration notes.
+- # Changelog (Part 3 submission)
+- feat: add MenuContext and navigation (Home, AddDish, Guest) — allows global state for menu items.
+- feat: Home screen with search, filters, total count and averages (per-course).
+- feat: Add Dish screen (moved from home) — chef can add new menu items (name, description, course, price).
+- feat: Guest screen with course filter and remove option for demo/poe marking.
+- feat: DishCard component — reusable UI for rendering dish details and remove action.
+- fix: calculateAverages formatting and NaN handling (`Rxx.xx`).
+- chore: UI consistency and style tweaks.
+- docs: README containing this changelog and PoE checklist.
 
 *UI Refinements*
 - Adjusted typography, spacing, and card layout.
