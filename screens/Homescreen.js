@@ -9,7 +9,7 @@ export default function HomeScreen({ navigation }) {
   const { menuItems } = useContext(MenuContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("All");
-
+//minor UI tweak for commit count
   const filteredItems = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
     return menuItems.filter(dish => {

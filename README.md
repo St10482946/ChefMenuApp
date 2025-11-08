@@ -46,9 +46,7 @@ index.js # Entry point
 - React Native Picker  
 - React Navigation (Stack)  
 
-## Changelog
-*Part 3 Submission*
-- # Changelog (Part 3 submission)
+## Changelog (Part 3 submission)
 - feat: add MenuContext and navigation (Home, AddDish, Guest) — allows global state for menu items.
 - feat: Home screen with search, filters, total count and averages (per-course).
 - feat: Add Dish screen (moved from home) — chef can add new menu items (name, description, course, price).
