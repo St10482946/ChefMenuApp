@@ -80,7 +80,7 @@ index.js # Entry point
 
 ## How to Run
 1. Clone the repo  
-   git clone https://github.com/st10482946/ChefMenuApp.git
+   https://github.com/st10482946/ChefMenuApp.git
    cd ChefMenuApp
    npm install
    npx expo start
@@ -88,8 +88,8 @@ index.js # Entry point
 ## Snack - Expo Link
    https://snack.expo.dev/@qhawekazi/mast-part-3
 
-   ## Github Repo Link
-   git remote add origin https://github.com/St10482946/ChefMenuApp.git
+## Github Repo Link
+   https://github.com/St10482946/ChefMenuApp.git
 
-   ## Video demonstration link**
-   https://www.loom.com/share/773f58af85c849f580b4ec9482884017?sid=59ebde03-549b-48af-b678-e9b859db7a57
+## Video demonstration link**
+   https://www.loom.com/share/0cff8440254142cea2089c595d6fdd38
