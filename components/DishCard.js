@@ -1,35 +1,35 @@
-// components/DishCard.js
-import React, { useContext } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { MenuContext } from "../App";
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function DishCard({ item, showRemove = false }) {
-  const { removeDish } = useContext(MenuContext);
-
+export default function DishCard({ dish, onDelete }) {
   return (
     <View style={styles.card}>
-      <View style={styles.row}>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.desc}>{item.description}</Text>
-          <Text style={styles.meta}>{item.course} • R{Number(item.price).toFixed(2)}</Text>
-        </View>
-        {showRemove ? (
-          <TouchableOpacity style={styles.remove} onPress={() => removeDish(item.id)}>
-            <Text style={styles.removeText}>Remove</Text>
-          </TouchableOpacity>
-        ) : null}
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Text style={styles.title}>{dish.name}</Text>
+        <TouchableOpacity onPress={onDelete}>
+          <Text style={styles.delete}>❌</Text>
+        </TouchableOpacity>
       </View>
+      <Text style={styles.meta}>{dish.course} • R{dish.price}</Text>
+      <Text style={styles.desc}>{dish.description}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  card: { padding: 12, borderWidth: 1, borderColor: "#eee", borderRadius: 8, marginVertical: 6, backgroundColor: "#fff" },
-  row: { flexDirection: "row", alignItems: "center" },
-  name: { fontSize: 16, fontWeight: "700" },
-  desc: { color: "#444", marginTop: 4 },
-  meta: { marginTop: 6, fontSize: 12, color: "#333" },
-  remove: { backgroundColor: "#f33", padding: 8, borderRadius: 6, marginLeft: 8 },
-  removeText: { color: "#fff", fontWeight: "700" }
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 16,
+    marginBottom: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  title: { fontSize: 18, fontWeight: "700", color: "#0A3" },
+  meta: { fontSize: 14, color: "#666", marginVertical: 4 },
+  desc: { fontSize: 14, color: "#333" },
+  delete: { fontSize: 18, color: "red" },
 });

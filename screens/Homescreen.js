@@ -1,80 +1,121 @@
-// screens/HomeScreen.js
-import React, { useContext, useMemo, useState } from "react";
-import { View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet, SafeAreaView } from "react-native";
-import { MenuContext } from "../App";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Dimensions, ScrollView } from "react-native";
+import { getMenu, removeDish } from "../global/menu";
 import DishCard from "../components/DishCard";
-import { calculateAverages } from "../utils/calculations";
+
+const { width } = Dimensions.get("window");
 
 export default function HomeScreen({ navigation }) {
-  const { menuItems } = useContext(MenuContext);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [menuItems, setMenuItems] = useState([]);
   const [filter, setFilter] = useState("All");
-//minor UI tweak for commit count
-  const filteredItems = useMemo(() => {
-    const term = searchTerm.trim().toLowerCase();
-    return menuItems.filter(dish => {
-      const matchesCourse = filter === "All" || dish.course === filter;
-      const matchesSearch = dish.name.toLowerCase().includes(term) || dish.description.toLowerCase().includes(term);
-      return matchesCourse && matchesSearch;
-    });
-  }, [menuItems, filter, searchTerm]);
+  const courses = ["Starter", "Main", "Dessert", "Beverage"];
 
-  const averages = calculateAverages(menuItems);
+  // Update menu when screen loads
+  useEffect(() => {
+    setMenuItems([...getMenu()]);
+  }, []);
+
+  // Delete dish
+  const deleteDish = (id) => {
+    removeDish(id);
+    setMenuItems([...getMenu()]);
+  };
+
+  // Filter menu items
+  const filteredItems = [];
+  for (let i = 0; i < menuItems.length; i++) {   // for loop
+    if (filter === "All" || menuItems[i].course === filter) {
+      filteredItems.push(menuItems[i]);
+    }
+  }
+
+  // Calculate average price by course using nested for + for-in loops
+  const averagePriceByCourse = [];
+  for (let i = 0; i < courses.length; i++) {   // outer for loop
+    let sum = 0;
+    let count = 0;
+
+    let index = 0;
+    while (index < menuItems.length) {          // while loop
+      if (menuItems[index].course === courses[i]) {
+        // for-in loop over dish properties just as an example
+        for (let key in menuItems[index]) {     // for-in loop
+          if (key === "price") sum += menuItems[index][key];
+        }
+        count++;
+      }
+      index++;
+    }
+
+    const avg = count === 0 ? 0 : (sum / count).toFixed(2);
+    averagePriceByCourse.push({ course: courses[i], avg });
+  }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
+      {/* Header */}
       <Text style={styles.header}>Christoffel — Private Chef</Text>
 
-      <View style={styles.row}>
-        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate("AddDish")}>
-          <Text style={styles.navText}>Add Dish</Text>
+      {/* Navigation Buttons */}
+      <View style={styles.buttonRow}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("AddDish")}>
+          <Text style={styles.buttonText}>Add Dish</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate("Guest")}>
-          <Text style={styles.navText}>Guest View</Text>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("ViewMenu")}>
+          <Text style={styles.buttonText}>View Menu</Text>
         </TouchableOpacity>
       </View>
 
-      <TextInput style={styles.input} placeholder="Search..." value={searchTerm} onChangeText={setSearchTerm} />
-
-      <View style={styles.chipRow}>
-        {["All", "Starter", "Main", "Dessert", "Beverage"].map(c => (
-          <TouchableOpacity key={c} style={[styles.chip, filter === c && styles.chipSelected]} onPress={() => setFilter(c)}>
-            <Text style={[styles.chipText, filter === c && styles.chipTextSelected]}>{c}</Text>
+      {/* Filter Chips */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 16 }}>
+        {["All", "Starter", "Main", "Dessert", "Beverage"].map((c) => (
+          <TouchableOpacity
+            key={c}
+            style={[styles.chip, filter === c && styles.chipSelected]}
+            onPress={() => setFilter(c)}
+          >
+            <Text style={[styles.chipText, filter === c && { color: "#fff" }]}>{c}</Text>
           </TouchableOpacity>
         ))}
-      </View>
+      </ScrollView>
 
-      <View style={styles.summary}>
-        <Text style={styles.summaryText}>Total items: {menuItems.length}</Text>
-        <Text style={styles.summaryText}>Averages — Starter: {averages.Starter}</Text>
-        <Text style={styles.summaryText}>Main: {averages.Main}</Text>
-        <Text style={styles.summaryText}>Dessert: {averages.Dessert}</Text>
-        <Text style={styles.summaryText}>Beverage: {averages.Beverage}</Text>
-      </View>
+      {/* Menu Items */}
+      {filteredItems.length === 0 ? (
+        <Text style={{ textAlign: "center", marginTop: 20, fontSize: 16 }}>
+          {menuItems.length === 0 ? "No dishes added yet" : "No matching dishes found"}
+        </Text>
+      ) : (
+        <FlatList
+          data={filteredItems}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <DishCard dish={item} onDelete={() => deleteDish(item.id)} />}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        />
+      )}
 
-      <FlatList
-        style={{ marginTop: 8 }}
-        data={filteredItems}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <DishCard item={item} showRemove={false} />}
-        ListEmptyComponent={<Text style={{ textAlign: "center", marginTop: 20 }}>{menuItems.length === 0 ? "No dishes yet." : "No matching dishes."}</Text>}
-      />
-    </SafeAreaView>
+      {/* Average Prices */}
+      <View style={styles.avgContainer}>
+        <Text style={styles.avgHeader}>Average Price by Course</Text>
+        {averagePriceByCourse.map((c) => (
+          <Text key={c.course} style={styles.avgText}>
+            {c.course}: R{c.avg}
+          </Text>
+        ))}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
-  header: { fontSize: 20, fontWeight: "bold", marginBottom: 8 },
-  input: { borderWidth: 1, borderColor: "#ccc", borderRadius: 6, padding: 8, marginBottom: 8 },
-  chipRow: { flexDirection: "row", flexWrap: "wrap", marginBottom: 8 },
-  chip: { paddingHorizontal: 12, paddingVertical: 6, backgroundColor: "#eee", borderRadius: 16, marginRight: 6, marginBottom: 6 },
+  container: { flex: 1, backgroundColor: "#F5F5F5", padding: 16 },
+  header: { fontSize: 26, fontWeight: "bold", marginBottom: 16, color: "#0A3" },
+  buttonRow: { flexDirection: "row", justifyContent: "space-between", marginBottom: 16 },
+  button: { backgroundColor: "#0A3", padding: 14, borderRadius: 10, width: width * 0.45 },
+  buttonText: { color: "#fff", fontWeight: "bold", textAlign: "center", fontSize: 16 },
+  chip: { paddingHorizontal: 16, paddingVertical: 8, backgroundColor: "#eee", borderRadius: 20, marginRight: 10 },
   chipSelected: { backgroundColor: "#0A3" },
-  chipText: { color: "#000" },
-  chipTextSelected: { color: "#fff" },
-  row: { flexDirection: "row", justifyContent: "space-between", marginBottom: 8 },
-  navButton: { backgroundColor: "#0A3", padding: 10, borderRadius: 8 },
-  navText: { color: "#fff", fontWeight: "600" },
-  summary: { marginTop: 8, padding: 10, borderRadius: 6, backgroundColor: "#f6f6f6" },
-  summaryText: { fontSize: 12, marginBottom: 4 }
+  chipText: { fontSize: 14, color: "#000" },
+  avgContainer: { marginTop: 20, padding: 16, backgroundColor: "#fff", borderRadius: 10 },
+  avgHeader: { fontSize: 18, fontWeight: "600", marginBottom: 8 },
+  avgText: { fontSize: 16, marginBottom: 4 },
 });
