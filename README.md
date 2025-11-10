@@ -55,7 +55,15 @@ index.js # Entry point
 - fix: calculateAverages formatting and NaN handling (`Rxx.xx`).
 - chore: UI consistency and style tweaks.
 - docs: README containing this changelog and PoE checklist.
-
+- Date	File / Component	Change Description
+- 2025-11-09	Homescreen.js	Refactored home screen to display full menu, average prices, and course filter. Added for, while, and for-in loops to calculate averages. Improved UI for mobile and web.
+- 2025-11-09	AddDishScreen.js	Added numeric validation for price. Added navigation buttons to Home and View Menu.
+- 2025-11-09	ViewMenuScreen.js	Implemented delete functionality to remove dishes from global menu. Scrollable list added.
+- 2025-11-09	DishCard.js	Reusable component for displaying dishes; includes delete button.
+- 2025-11-09	global/menu.js	Created global array to store all dishes; functions for adding, removing, and retrieving dishes.
+- 2025-11-09	App.js	Updated navigation stack to include HomeScreen, AddDishScreen, and ViewMenuScreen.
+- 2025-11-09	UI / Styling	Improved colors, spacing, font sizes, and scrollability to ensure app is user-friendly on mobile and web devices.
+- 2025-11-09	Loops & Functions	Added explicit for, while, and for-in loops as per POE rubric.
 *UI Refinements*
 - Adjusted typography, spacing, and card layout.
 - Added visual feedback on selected filters.
