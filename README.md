@@ -85,8 +85,11 @@ index.js # Entry point
    npm install
    npx expo start
 
+## Snack - Expo Link
+   https://snack.expo.dev/@qhawekazi/mast-part-3
+
    ## Github Repo Link
-   git remote add origin https://github.com/ST10482946/ChefMenuApp.git
+   git remote add origin https://github.com/St10482946/ChefMenuApp.git
 
    ## Video demonstration link**
    https://www.loom.com/share/773f58af85c849f580b4ec9482884017?sid=59ebde03-549b-48af-b678-e9b859db7a57
